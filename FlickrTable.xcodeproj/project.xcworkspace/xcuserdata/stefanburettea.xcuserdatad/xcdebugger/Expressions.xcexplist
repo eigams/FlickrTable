@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[HorizontalScroller scrollerTapped:]:HorizontalScroller.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_scroller.subviews">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[N4FlickrImage(TableRepresentation) tr_tableRepresentation]:N4FlickrImage+TableRepresentation.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.posted">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[N4FlickrImageCell initWithStyle:reuseIdentifier:]:N4FlickrImageCell.m">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
