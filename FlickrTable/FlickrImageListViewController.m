@@ -20,7 +20,7 @@
 #import "LibraryAPI.h"
 #import "ImageInfoDelegate.h"
 
-@implementation FlickrImageListViewController
+@interface FlickrImageListViewController()
 {
     UITableView *_dataTable;
     
@@ -31,12 +31,16 @@
     
     HorizontalScroller *_scroller;
     
-    LibraryAPI *_libraryAPI;
-    
     UIToolbar *_toolbar;
     
     ImageInfoDelegate *_imageInfoDelegate;
+    
+    LibraryAPI *_libraryAPI; //handles the notifs of a picture being dowloaded
 }
+
+@end
+
+@implementation FlickrImageListViewController
 
 // |+|=======================================================================|+|
 // |+|                                                                       |+|
@@ -62,6 +66,7 @@
         self.title = @"Recent Photos";
         
         _libraryAPI = [LibraryAPI sharedInstance];
+        
         _imageInfoDelegate = [[ImageInfoDelegate alloc] init];        
     }
     
@@ -87,15 +92,22 @@
 static const NSUInteger DATATABLE_XPOS = 100;
 static const NSUInteger DATATABLE_YPOS = 370;
 static const NSUInteger DATATABLE_HEIGHT = 560;
+static const NSUInteger DATATABLE_X_OFFSET = 100;
+static const float ROW_HEIGHT = 60.0f;
 - (void)createDataTable
 {
     //create the data table that's gonna hold the picture's details
-    _dataTable = [[UITableView alloc] initWithFrame:CGRectMake(DATATABLE_XPOS, DATATABLE_YPOS, self.view.frame.size.width - 200, DATATABLE_HEIGHT) style:UITableViewStyleGrouped];
+    _dataTable = [[UITableView alloc] initWithFrame:CGRectMake(DATATABLE_XPOS, DATATABLE_YPOS, self.view.frame.size.width - 2*DATATABLE_X_OFFSET, DATATABLE_HEIGHT) style:UITableViewStyleGrouped];
     _dataTable.delegate = self;
     _dataTable.dataSource = self;
     _dataTable.backgroundColor = [UIColor clearColor];
     _dataTable.opaque = NO;
     _dataTable.backgroundView = nil;
+    
+    [self.view addSubview:_dataTable];
+    
+    _dataTable.rowHeight = ROW_HEIGHT;
+    [_dataTable registerClass:[FlickrImageCell class] forCellReuseIdentifier:NSStringFromClass([FlickrImageCell class])];
 }
 
 // |+|=======================================================================|+|
@@ -237,11 +249,6 @@ static const NSUInteger DATATABLE_HEIGHT = 560;
     //create the uitable that will display the image info
     [self createDataTable];
     
-    [self.view addSubview:_dataTable];
-    
-    _dataTable.rowHeight = 60.0f;
-    [_dataTable registerClass:[FlickrImageCell class] forCellReuseIdentifier:NSStringFromClass([FlickrImageCell class])];
-
     [self createToolbar];
     
     _imageSource = [FlickerImageSource new];
@@ -304,8 +311,6 @@ static const NSUInteger SCROLLER_HEIGHT = 310;
 
         @try
         {
-            [_libraryAPI clearCache];
-            
             _currentPictureIndex = 0;
             
             [self showDataForPictureAtIndex:_currentPictureIndex];
@@ -363,7 +368,7 @@ static const NSUInteger SCROLLER_HEIGHT = 310;
     //cancel it and start the new request
     if(nil != _imageInfoDelegate)
     {
-        [_imageInfoDelegate cancelAllCalls];
+//        [_imageInfoDelegate cancelAllCalls];
     }
     
     //start the download of image infos <----> this might take awhile
@@ -638,11 +643,6 @@ static NSUInteger PICTURE_VIEW_HEIGHT = 230;
 // |+|=======================================================================|+|
 - (NSInteger)viewIndexForHorizontalScroller:(HorizontalScroller *)scroller
 {
-//    if(_currentPictureIndex < 1)
-//    {
-//        return _currentPictureIndex;
-//    }
-    
     return _currentPictureIndex - 1;
 }
 

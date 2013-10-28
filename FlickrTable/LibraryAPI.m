@@ -112,11 +112,6 @@
     [_cacheInfo removeAllObjects];
 }
 
-//1. download the images and the preview images
-//2. store all of them into an array
-//3. start to asynchronously download the rest of every image info (async NSURLRequest)
-//4. use delegation to update the UITableView when the download of image info completes
-
 // |+|=======================================================================|+|
 // |+|                                                                       |+|
 // |+|    FUNCTION NAME:   downloadImage                                     |+|

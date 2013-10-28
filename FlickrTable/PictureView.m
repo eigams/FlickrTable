@@ -9,11 +9,15 @@
 #import "PictureView.h"
 #import "FlickrConstants.h"
 
-@implementation PictureView
+@interface PictureView()
 {
     UIImageView *_previewImageView;
     UIActivityIndicatorView *_indicator;
 }
+
+@end
+
+@implementation PictureView
 
 // |+|=======================================================================|+|
 // |+|                                                                       |+|
@@ -62,21 +66,6 @@ static const NSUInteger PICTURE_FRAME = 10;
     
     return self;
 }
-
-
-//- (void)viewWillLayoutSubviews
-//{
-//    _previewImageView.frame = CGRectMake(5, 60, self.frame.size.width - 10, self.frame.size.height - 10);
-//}
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 // |+|=======================================================================|+|
 // |+|                                                                       |+|
