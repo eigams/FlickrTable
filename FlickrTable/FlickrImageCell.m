@@ -260,8 +260,6 @@ static const NSUInteger TITLE_LABEL_WIDTH = 150;
     
     CGRect contentRect = self.contentView.frame;
     CGRect frame;
-
-    NSLog(@"contentRect :%@", NSStringFromCGRect(contentRect));
     
     frame = CGRectMake(LEFT_RIGHT_MARGINS_OFFSET, TOP_BOTTOM_MARGINS_OFFSET, TITLE_LABEL_WIDTH, contentRect.size.height - 2*TOP_BOTTOM_MARGINS_OFFSET);
     _labelTitle.frame = frame;

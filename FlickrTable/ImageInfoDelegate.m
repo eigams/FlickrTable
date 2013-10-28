@@ -113,9 +113,8 @@ static NSString *FLICKR_URL_PHOTO_INFO = @"http://api.flickr.com/services/rest/?
 // |+|    FUNCTION NAME:   cancelAllCalls                                    |+|
 // |+|                                                                       |+|
 // |+|                                                                       |+|
-// |+|    DESCRIPTION:   This prevents new callbacks from being queued,      |+|
-// |+|                   cancels any queued callbacks                        |+|
-// |+|                   from being run, and then adds an operation          |+|
+// |+|    DESCRIPTION:   cancels any queued callbacks                        |+|
+// |+|                   and then adds an operation                          |+|
 // |+|                   on the queue to cancel all                          |+|
 // |+|                   connections and clean up the array we use.          |+|
 // |+|                                                                       |+|
@@ -141,6 +140,8 @@ static NSString *FLICKR_URL_PHOTO_INFO = @"http://api.flickr.com/services/rest/?
         
         [_connections removeAllObjects];
     }];
+    
+    [_networkQueue setSuspended:NO];
 }
 
 #pragma mark - NSURLConnection delegates

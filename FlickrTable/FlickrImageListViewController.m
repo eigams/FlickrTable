@@ -523,34 +523,6 @@ static const NSUInteger TABLE_VIEW_ROWS_COUNT = 7;
     return TABLE_VIEW_ROWS_COUNT;
 }
 
-// |+|=======================================================================|+|
-// |+|                                                                       |+|
-// |+|    FUNCTION NAME:  tableView: didSelectRowAtIndexPath                 |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    DESCRIPTION:                                                       |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    PARAMETERS:                                                        |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    RETURN VALUE:                                                      |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|=======================================================================|+|
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    // show the selected image in our image view controller
-//#warning presenting this causes a delay and the app hangs, maybe we can fix it?
-//	FlickrImageViewController *ctrl = [[FlickrImageViewController alloc] initWithFlickrImage:[_imageSource imageAtIndex:indexPath.row]];
-//
-//    UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-//    [selectedCell setAccessoryType:(([selectedCell accessoryType] == UITableViewCellAccessoryNone) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone)];
-//
-//    [self.navigationController pushViewController:ctrl animated:YES];
-//}
-
 #pragma mark - HorizontalScrollerDelegate methods
 
 // |+|=======================================================================|+|
@@ -574,8 +546,6 @@ static const NSUInteger TABLE_VIEW_ROWS_COUNT = 7;
     _currentPictureIndex = index;
     
     [self showDataForPictureAtIndex:index];
-    
-    NSLog(@"_currentPictureIndex: %d", _currentPictureIndex);
 }
 
 // |+|=======================================================================|+|

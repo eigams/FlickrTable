@@ -19,10 +19,14 @@
 - (void)scrollViewTwoFingerTapped:(UITapGestureRecognizer *)recognizer;
 @end
 
-@implementation FlickrImageViewController
+@interface FlickrImageViewController()
 {
     FlickrImage *_image;
 }
+
+@end
+
+@implementation FlickrImageViewController
 
 @synthesize imageView = _imageView;
 @synthesize scrollView = _scrollView;
@@ -72,7 +76,6 @@
 // |+|=======================================================================|+|
 - (void)setupScrollView
 {
-    CGRect frame = CGRectMake(0, 0, 640, 900);
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
     self.scrollView.showsHorizontalScrollIndicator = YES;
     self.scrollView.showsVerticalScrollIndicator = YES;
@@ -119,15 +122,15 @@
         NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
         
         dispatch_sync(dispatch_get_main_queue(), ^{
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+            self.imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
             
-            imageView.image = [UIImage imageWithData:responseData];
-            imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            imageView.contentMode = UIViewContentModeScaleAspectFit;
+            self.imageView.image = [UIImage imageWithData:responseData];
+            self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+            self.imageView.contentMode = UIViewContentModeCenter;
 
-            [self.scrollView addSubview:imageView];
+            [self.scrollView addSubview:self.imageView];
             
-            self.scrollView.contentSize = imageView.image.size;
+            self.scrollView.contentSize = self.imageView.image.size;
             
             [activityIndicator stopAnimating];
         });
@@ -188,8 +191,6 @@
 //These methods are called when the tap gesture recognizer fires
 - (void)scrollViewDoubleTapped:(UITapGestureRecognizer*)recognizer
 {
-    NSLog(@"Message from scrollViewDoubleTapped !");
-    
     // 1
     CGPoint pointInView = [recognizer locationInView:self.imageView];
     
@@ -299,14 +300,7 @@
     [super viewDidLoad];
     
     [self setupScrollView];
-    
-    UIImage *image = [UIImage imageNamed:_image.title];
-//    self.imageView = [[UIImageView alloc] initWithImage:image];
-//    self.imageView.frame = (CGRect){.origin = CGPointMake(0.0f, 0.0f), .size=image.size};
-//    [self.scrollView addSubview:self.imageView];
-    
-//    self.scrollView.contentSize = image.size;
-    
+        
     UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDoubleTapped:)];
     doubleTapRecognizer.numberOfTapsRequired = 2;
     doubleTapRecognizer.numberOfTouchesRequired = 1;

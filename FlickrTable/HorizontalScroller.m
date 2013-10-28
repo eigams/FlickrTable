@@ -92,8 +92,7 @@ typedef void (^HorizontalScrollerClickedViewDelegateMethod_t) (int index);
         if(CGRectContainsPoint(view.frame, location))
         {
             delegate(index);
-            
-            NSLog(@"Point coordinates: %@", NSStringFromCGPoint(CGPointMake(view.frame.origin.x - self.frame.size.width/2 + view.frame.size.width/2, 0)));
+
             [_scroller setContentOffset:CGPointMake(view.frame.origin.x - self.frame.size.width/2 + view.frame.size.width/2, 0) animated:YES];
         }
     }
@@ -196,7 +195,7 @@ typedef void (^HorizontalScrollerClickedViewDelegateMethod_t) (int index);
     if([self.delegate respondsToSelector:@selector(viewIndexForHorizontalScroller:)])
     {
         int view = [self.delegate viewIndexForHorizontalScroller:self];
-        NSLog(@"viewIndex: %d", view);
+
         [_scroller setContentOffset:CGPointMake(view*(VIEW_DIMENSIONS_WIDTH + (2*VIEW_PADDING_X)), 0) animated:YES];
     }
 }
