@@ -1,24 +1,21 @@
 //
-//  PictureView.m
+//  ImageClient.m
 //  FlickrTable
 //
-//  Created by Stefan Burettea on 29/09/2013.
-//  Copyright (c) 2013 Stefan Buretea. All rights reserved.
+//  Created by Stefan Buretea on 3/31/14.
+//  Copyright (c) 2014 Stefan Buretea AG. All rights reserved.
 //
 
-#import "PictureView.h"
-#import "FlickrConstants.h"
-#import "UIImageView+AFNetworking.h"
+#import "ImageHTTPClient.h"
 
-@interface PictureView()
-{
-    UIImageView *_previewImageView;
-    UIActivityIndicatorView *_indicator;
-}
+
+@interface ImageHTTPClient()
+
+@property (nonatomic, strong) NSURLRequest *request;
 
 @end
 
-@implementation PictureView
+@implementation ImageHTTPClient
 
 // |+|=======================================================================|+|
 // |+|                                                                       |+|
@@ -36,88 +33,79 @@
 // |+|                                                                       |+|
 // |+|                                                                       |+|
 // |+|=======================================================================|+|
-static const NSUInteger PICTURE_FRAME = 10;
-static const NSUInteger PICTURE_ORIGIN_X = 5;
-static const NSUInteger PICTURE_ORIGIN_Y = 5;
-- (id)initWithFrame:(CGRect)frame picturePreview:(NSString *)previewURL
++ (ImageHTTPClient *) sharedInstance
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.backgroundColor = [UIColor blackColor];
-        
-        //create and add the imagePreview
-        _previewImageView = [[UIImageView alloc] initWithFrame:CGRectMake(PICTURE_ORIGIN_X, PICTURE_ORIGIN_Y, frame.size.width - PICTURE_FRAME, frame.size.height - PICTURE_FRAME)];
-        [self addSubview:_previewImageView];
-        
-        //create, add and start the activity indicator
-        _indicator = [[UIActivityIndicatorView alloc] init];
-        _indicator.center = self.center;
-        _indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
-        [_indicator startAnimating];
-        
-        [self addSubview:_indicator];
-        
-        //add an observer for the image member of the _previewImage
-        //when that changes, the image has been downloaded and the activity indicator should stop
-        [_previewImageView addObserver:self forKeyPath:@"image" options:0 context:nil];
-        
-        if(nil != _previewImageView && nil != previewURL)
-        {
-            //AFNetworking category over UIImageView
-            [_previewImageView setImageWithURL:[NSURL URLWithString:previewURL]];
-        }
+    static ImageHTTPClient *sharedClient = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *baseURLString = [NSString stringWithFormat:FLICKR_URL_REQUEST_RECENT, FLICKR_KEY];
+        sharedClient = [[self alloc] initWithBaseURL:[NSURL URLWithString:baseURLString]];
+    });
+    
+    return sharedClient;
+}
+
+// |+|=======================================================================|+|
+// |+|                                                                       |+|
+// |+|    FUNCTION NAME:                                                     |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    DESCRIPTION:                                                       |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    PARAMETERS:                                                        |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    RETURN VALUE:                                                      |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|=======================================================================|+|
+- (void)loadRecentImages:(void(^)(NSArray *images, NSError *error))completion
+{
+    ImageHTTPClient *client = [[self class] sharedInstance];
+    
+    [[[NSURLSession sharedSession] dataTaskWithRequest:client.request
+                                     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                         
+                                         if(nil == error) {
+                                             NSDictionary *sink = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                                             NSArray *images = sink[@"photos"][@"photo"];
+                                             
+                                             NSLog(@"image count: %d", [images count]);
+                                             
+                                             completion(images, nil);
+                                         } else {
+                                             completion(nil, error);
+                                         }
+    }] resume];
+}
+
+// |+|=======================================================================|+|
+// |+|                                                                       |+|
+// |+|    FUNCTION NAME:                                                     |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    DESCRIPTION:                                                       |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    PARAMETERS:                                                        |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    RETURN VALUE:                                                      |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|=======================================================================|+|
+- (id) initWithBaseURL:(NSURL *)url
+{
+    self = [super init];
+    if(self) {
+        self.request = [NSURLRequest requestWithURL:url];
     }
     
     return self;
-}
-
-// |+|=======================================================================|+|
-// |+|                                                                       |+|
-// |+|    FUNCTION NAME:                                                     |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    DESCRIPTION:                                                       |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    PARAMETERS:                                                        |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    RETURN VALUE:                                                      |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|=======================================================================|+|
-- (void) dealloc
-{
-    @try
-    {
-        [_previewImageView removeObserver:self forKeyPath:@"image"];
-    }
-    @catch (NSException __unused *exception){}
-}
-
-// |+|=======================================================================|+|
-// |+|                                                                       |+|
-// |+|    FUNCTION NAME:                                                     |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    DESCRIPTION:                                                       |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    PARAMETERS:                                                        |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    RETURN VALUE:                                                      |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|=======================================================================|+|
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if([keyPath isEqualToString:@"image"])
-    {
-        [_indicator stopAnimating];
-    }
 }
 
 @end

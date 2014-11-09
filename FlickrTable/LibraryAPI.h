@@ -10,8 +10,11 @@
 
 @interface LibraryAPI : NSObject
 
-+ (LibraryAPI *)sharedInstance;
++ (instancetype)sharedInstance;
 
 - (void)clearCache;
+
++ (BOOL)saveImageURL:(NSString *)URL toFile:(NSString *)filename;
++ (BOOL)deleteImageFile:(NSString *)filename;
 
 @end

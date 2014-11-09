@@ -19,4 +19,6 @@ typedef void (^ImageInfoURLConnectionDelegateFailure) (NSError *error);
 - (void) downloadImageInfo:(NSString *)pid withCompletion:(ImageInfoURLConnectionDelegateSuccess) success failure:(ImageInfoURLConnectionDelegateFailure) failure;
 - (void) cancelAllCalls;
 
++ (instancetype) sharedInstance;
+
 @end

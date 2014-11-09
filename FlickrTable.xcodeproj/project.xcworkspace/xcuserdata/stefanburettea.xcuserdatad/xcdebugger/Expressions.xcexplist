@@ -11,6 +11,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "__41-[FlickerImageSource fetchArchivedImages]_block_invoke:FlickerImageSource.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "myclass-&gt;_images">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[N4FlickrImage(TableRepresentation) tr_tableRepresentation]:N4FlickrImage+TableRepresentation.m">
          <PersistentStrings>
             <PersistentString
@@ -20,6 +28,17 @@
       </ContextState>
       <ContextState
          contextName = "-[N4FlickrImageCell initWithStyle:reuseIdentifier:]:N4FlickrImageCell.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[FlickrImageViewController viewDidLoad]:FlickrImageViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.scrollView">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__38-[FlickrImageViewController loadImage]_block_invoke_2:FlickrImageViewController.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

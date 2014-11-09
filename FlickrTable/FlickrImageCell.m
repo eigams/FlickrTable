@@ -50,7 +50,8 @@
         _labelContent.backgroundColor = [UIColor clearColor];
         _labelContent.opaque = NO;
 
-        _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
         
         [self addSubview:_labelTitle];
         [self addSubview:_labelContent];
@@ -125,6 +126,30 @@
 {
     _labelContent.text = _title;
 }
+
+// |+|=======================================================================|+|
+// |+|                                                                       |+|
+// |+|    FUNCTION NAME:                                                     |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    DESCRIPTION:                                                       |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    PARAMETERS:                                                        |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    RETURN VALUE:                                                      |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|=======================================================================|+|
+- (void)setTextColor:(UIColor *)textColor
+{
+    _labelTitle.textColor = textColor;
+    _labelContent.textColor = textColor;
+    _activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+}
+
 
 // |+|=======================================================================|+|
 // |+|                                                                       |+|
@@ -229,7 +254,7 @@
 // |+|=======================================================================|+|
 - (UIImage *)previewImage
 {
-//    return _imageView.image;
+    return _imageView.image;
 }
 
 

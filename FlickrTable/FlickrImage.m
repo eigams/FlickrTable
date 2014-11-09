@@ -8,6 +8,13 @@
 
 #import "FlickrImage.h"
 
+@interface FlickrImage()
+
+- (id)init;
+- (id)initWithPID:(NSString *)pid url:(NSString *)url previewURL:(NSString *)previewURL;
+
+@end
+
 @implementation FlickrImage
 
 @synthesize pid = _pid;
@@ -73,6 +80,27 @@
 // |+|                                                                       |+|
 // |+|                                                                       |+|
 // |+|=======================================================================|+|
++ (FlickrImage *)image
+{
+    return [[[self class] alloc] init];
+}
+
+// |+|=======================================================================|+|
+// |+|                                                                       |+|
+// |+|    FUNCTION NAME:                                                     |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    DESCRIPTION:                                                       |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    PARAMETERS:                                                        |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    RETURN VALUE:                                                      |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|=======================================================================|+|
 - (id)initWithPID:(NSString *)pid url:(NSString *)url previewURL:(NSString *)previewURL
 {
     self = [super init];
@@ -108,9 +136,30 @@
 // |+|                                                                       |+|
 // |+|                                                                       |+|
 // |+|=======================================================================|+|
++ (FlickrImage *)imageWithPID:(NSString *)pid url:(NSString *)url previewURL:(NSString *)previewURL
+{
+    return [[[self class] alloc] initWithPID:pid url:url previewURL:previewURL];
+}
+
+// |+|=======================================================================|+|
+// |+|                                                                       |+|
+// |+|    FUNCTION NAME:                                                     |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    DESCRIPTION:                                                       |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    PARAMETERS:                                                        |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    RETURN VALUE:                                                      |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|=======================================================================|+|
 + (FlickrImage *) imageWithImage:(FlickrImage *)source
 {
-    return [[FlickrImage alloc] initWithPID:source.pid url:source.url previewURL:source.url];
+    return [[[self class] alloc] initWithPID:source.pid url:source.url previewURL:source.url];
 }
 
 @end

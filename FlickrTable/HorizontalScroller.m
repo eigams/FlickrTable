@@ -94,8 +94,40 @@ typedef void (^HorizontalScrollerClickedViewDelegateMethod_t) (int index);
             delegate(index);
 
             [_scroller setContentOffset:CGPointMake(view.frame.origin.x - self.frame.size.width/2 + view.frame.size.width/2, 0) animated:YES];
+            
+            break;
         }
     }
+}
+
+// |+|=======================================================================|+|
+// |+|                                                                       |+|
+// |+|    FUNCTION NAME:    animateViewAtIndex                               |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    DESCRIPTION:                                                       |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    PARAMETERS:                                                        |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    RETURN VALUE:                                                      |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|=======================================================================|+|
+- (void)animateViewFrameAtIndex:(NSUInteger)index {
+    
+    if(index >= [_scroller.subviews count]) {
+        return ;
+    }
+    
+    UIView *view = _scroller.subviews[index];
+    UIColor *saveColor = view.backgroundColor;
+    view.backgroundColor = [UIColor whiteColor];
+    [UIView animateWithDuration:1.5 animations:^{
+        view.backgroundColor = saveColor;
+    }];
 }
 
 // |+|=======================================================================|+|
@@ -118,6 +150,8 @@ typedef void (^HorizontalScrollerClickedViewDelegateMethod_t) (int index);
 {
     [self gestureRecognizerAction:gesture withDelegate:^(int index) {
         [self.delegate horizontalScroller:self clickedViewAtIndex:index];
+       
+        [self animateViewFrameAtIndex:index];
     }];
 }
 
@@ -162,8 +196,7 @@ typedef void (^HorizontalScrollerClickedViewDelegateMethod_t) (int index);
 // |+|=======================================================================|+|
 - (void)reload
 {
-    if(nil == self.delegate)
-    {
+    if(nil == self.delegate) {
         return;
     }
     
@@ -173,8 +206,8 @@ typedef void (^HorizontalScrollerClickedViewDelegateMethod_t) (int index);
     }];
     
     CGFloat xValue = VIEW_OFFSET;
-    for(int i = 0; i < [self.delegate numberOfViewsForHorizontalScroller:self]; ++i)
-    {
+    for(int i = 0; i < [self.delegate numberOfViewsForHorizontalScroller:self]; ++i) {
+        
         xValue += VIEW_PADDING_X;
         UIView *view = [self.delegate horizontalScroller:self viewAtIndex:i];
         view.frame = CGRectMake(xValue, VIEW_PADDING_Y, VIEW_DIMENSIONS_WIDTH, VIEW_DIMENSIONS_HEIGHT);
@@ -186,17 +219,17 @@ typedef void (^HorizontalScrollerClickedViewDelegateMethod_t) (int index);
     [_scroller setContentSize:CGSizeMake(xValue + VIEW_OFFSET, self.frame.size.height)];
     
     //if an initial view is defined, center the scroller on it
-    if([self.delegate respondsToSelector:@selector(initialViewIndexForHorizontalScroller:)])
-    {
+    if([self.delegate respondsToSelector:@selector(initialViewIndexForHorizontalScroller:)]) {
         int initialView = [self.delegate initialViewIndexForHorizontalScroller:self];
         [_scroller setContentOffset:CGPointMake(initialView*(VIEW_DIMENSIONS_WIDTH + (2*VIEW_PADDING_X)), 0) animated:YES];
     }
     
-    if([self.delegate respondsToSelector:@selector(viewIndexForHorizontalScroller:)])
-    {
-        int view = [self.delegate viewIndexForHorizontalScroller:self];
+    if([self.delegate respondsToSelector:@selector(viewIndexForHorizontalScroller:)]) {
+        int viewIndex = [self.delegate viewIndexForHorizontalScroller:self];
 
-        [_scroller setContentOffset:CGPointMake(view*(VIEW_DIMENSIONS_WIDTH + (2*VIEW_PADDING_X)), 0) animated:YES];
+        [_scroller setContentOffset:CGPointMake(viewIndex*(VIEW_DIMENSIONS_WIDTH + (2*VIEW_PADDING_X)), 0) animated:YES];
+        
+        [self animateViewFrameAtIndex:viewIndex + 1];
     }
 }
 
@@ -246,6 +279,8 @@ typedef void (^HorizontalScrollerClickedViewDelegateMethod_t) (int index);
     [_scroller setContentOffset:CGPointMake(xFinal,0) animated:YES];
     
     [self.delegate horizontalScroller:self clickedViewAtIndex:viewIndex + 1];
+    
+    [self animateViewFrameAtIndex:viewIndex + 1];
 }
 
 #pragma mark - UIViewScrollDelegate callbacks

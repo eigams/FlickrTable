@@ -33,6 +33,18 @@
     NSString *_pid;
 }
 
++ (ImageInfoDelegate *)sharedInstance;
+{
+    static ImageInfoDelegate *instance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [[self alloc] init];
+    });
+    
+    return instance;
+}
+
+
 // |+|=======================================================================|+|
 // |+|                                                                       |+|
 // |+|    FUNCTION NAME:   init                                              |+|
@@ -87,7 +99,8 @@ static NSString *FLICKR_URL_PHOTO_INFO = @"http://api.flickr.com/services/rest/?
 {
     _pid = pid;
     
-    NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:FLICKR_URL_PHOTO_INFO, FLICKR_KEY, pid]] cachePolicy:_cachePolicy timeoutInterval:_timeout];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:FLICKR_URL_PHOTO_INFO, FLICKR_KEY, pid]];
+    NSURLRequest *theRequest = [NSURLRequest requestWithURL:url cachePolicy:_cachePolicy timeoutInterval:_timeout];
     ImageInfoURLConnection *theConnection = [[ImageInfoURLConnection alloc] initWithRequest:theRequest delegate:self startImmediately:NO];
     if(nil == theConnection)
     {
@@ -132,11 +145,13 @@ static NSString *FLICKR_URL_PHOTO_INFO = @"http://api.flickr.com/services/rest/?
     [_networkQueue setSuspended:YES];
     [_networkQueue cancelAllOperations];
     [_networkQueue addOperationWithBlock:^{
-        for(ImageInfoURLConnection *connection in _connections)
-        {
+        
+        [_connections enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            ImageInfoURLConnection *connection = obj;
+            
             [connection cancel];
             connection.failure([NSError errorWithDomain:@"ImageInfoDelegate" code:-2 userInfo:@{NSLocalizedDescriptionKey: @"Call canceled by user"}]);
-        }
+        }];
         
         [_connections removeAllObjects];
     }];

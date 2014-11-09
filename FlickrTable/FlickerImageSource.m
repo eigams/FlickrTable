@@ -10,46 +10,19 @@
 #import "FlickrConstants.h"
 #import "FlickrImage.h"
 
-@implementation NSMutableURLRequest(ImageURLRequest)
+#import "ImageHTTPClient.h"
+#import "ImageDataInfo.h"
 
-// |+|=======================================================================|+|
-// |+|                                                                       |+|
-// |+|    FUNCTION NAME:                                                     |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    DESCRIPTION:                                                       |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    PARAMETERS:                                                        |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    RETURN VALUE:                                                      |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|=======================================================================|+|
-+ (NSMutableURLRequest *) URLRequestWithString:(NSString *)urlString
-{
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
-    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    request.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData; // this will make sure the request always ignores the cached image
-    request.HTTPShouldHandleCookies = NO;
-    request.HTTPShouldUsePipelining = YES;
-    
-    return request;
-}
-
-@end
+#import "ManagedObjectStore.h"
 
 @implementation FlickerImageSource
 {
-    NSArray *_images;
+    NSMutableArray *_images;
 }
 
 // |+|=======================================================================|+|
 // |+|                                                                       |+|
-// |+|    FUNCTION NAME:                                                     |+|
+// |+|    FUNCTION NAME:   fetchRecentImagesWithCompletion                   |+|
 // |+|                                                                       |+|
 // |+|                                                                       |+|
 // |+|    DESCRIPTION:                                                       |+|
@@ -63,77 +36,105 @@
 // |+|                                                                       |+|
 // |+|                                                                       |+|
 // |+|=======================================================================|+|
-static NSString *FLICKR_URL_PHOTO_INFO = @"http://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=%@&photo_id=%@&format=json&nojsoncallback=1";
-- (NSMutableDictionary *)runRequest:(NSString *)url andParam:(NSString *)param
+- (void)fetchRecentImages
 {
-    NSString *urlString = (nil == param) ? [NSString stringWithFormat:url, FLICKR_KEY] : [NSString stringWithFormat:url, FLICKR_KEY, param];
+    __block FlickerImageSource *myclass = self;
     
-    NSMutableURLRequest *request = [NSMutableURLRequest URLRequestWithString:urlString];
-    
-    NSURLResponse *response;
-    
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-    if(nil == responseData)
-    {
-        NSLog(@"response data is nil !!!");
+    [[ImageHTTPClient sharedInstance] loadRecentImages:^(NSArray *images, NSError *error) {
         
-        return nil;
-    }
-
-    return [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
-}
-
-// |+|=======================================================================|+|
-// |+|                                                                       |+|
-// |+|    FUNCTION NAME:                                                     |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    DESCRIPTION:                                                       |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    PARAMETERS:                                                        |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|    RETURN VALUE:                                                      |+|
-// |+|                                                                       |+|
-// |+|                                                                       |+|
-// |+|=======================================================================|+|
-static NSString *FLICKR_URL_REQUEST_RECENT = @"http://api.flickr.com/services/rest?method=flickr.photos.getRecent&api_key=%@&format=json&nojsoncallback=1";
-- (void)fetchRecentImagesWithCompletion:(void (^)(void))completion
-{
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
-        NSMutableDictionary *jsonData = [self runRequest:FLICKR_URL_REQUEST_RECENT andParam:nil];
-
-        NSArray *jsonImages = jsonData[@"photos"][@"photo"];
-
-        __block NSMutableArray *images = [NSMutableArray arrayWithCapacity: jsonImages.count];
-
-        NSMutableString *imageURL;
-        NSMutableString *previewURL;
+        myclass->_images = [NSMutableArray arrayWithCapacity: images.count];
         
-        for(NSDictionary* image in jsonImages)
-        {
-            NSString *url = [NSString stringWithFormat:@"http://farm%@.staticflickr.com/%@/%@_%@", image[@"farm"], image[@"server"], image[@"id"], image[@"secret"] ];
-
-            //compute the url for the pic
-            imageURL = [[NSMutableString alloc] initWithString:url];
-            [imageURL appendString:@"_b.jpg"];
+        __block NSMutableString *imageURL;
+        __block NSMutableString *previewURL;
+        
+        [images enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             
-            //compute the url for the previer pic
-            previewURL = [[NSMutableString alloc] initWithString:url];
-            [previewURL appendString:@"_q.jpg"];
+            NSDictionary *image = obj;
+            
+            @autoreleasepool {
+                NSString *url = [NSString stringWithFormat:@"http://farm%@.staticflickr.com/%@/%@_%@", image[@"farm"], image[@"server"], image[@"id"], image[@"secret"] ];
+                
+                //compute the url for the pic
+                imageURL = [NSMutableString stringWithString:url];
+                [imageURL appendString:@"_b.jpg"];
+                
+                //compute the url for the previer pic
+                previewURL = [NSMutableString stringWithString:url];
+                [previewURL appendString:@"_q.jpg"];
+                
+                //the image info is incomplete
+                //the rest of the info about and image will be downloaded when the preview is clicked
+                FlickrImage * flickerImage = [FlickrImage imageWithPID:image[@"id"] url:imageURL previewURL:previewURL];
+                [myclass->_images addObject:flickerImage];
+                
+                if(idx >= MAX_IMAGES - 1) {
+                    *stop = YES;
+                }
+            }
 
-            //the image info is incomplete
-            //the rest of the info about and image will be downloaded when the preview is clicked
-            FlickrImage * flickerImage = [[FlickrImage alloc] initWithPID:image[@"id"] url:imageURL previewURL:previewURL];
-            [images addObject:flickerImage];
+        }];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if([myclass->_delegate respondsToSelector:@selector(didCompleteDownloadingImages)])
+                [myclass->_delegate didCompleteDownloadingImages];
+        });
+    }];
+    
+    return ;
+}
+
+// |+|=======================================================================|+|
+// |+|                                                                       |+|
+// |+|    FUNCTION NAME:   fetchArchivedImagesWithCompletion                 |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    DESCRIPTION:                                                       |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    PARAMETERS:                                                        |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|    RETURN VALUE:                                                      |+|
+// |+|                                                                       |+|
+// |+|                                                                       |+|
+// |+|=======================================================================|+|
+- (void)fetchArchivedImages
+{
+    __block FlickerImageSource *myclass = self;
+    
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        //load images from the disk
+        NSArray *images = [[ManagedObjectStore sharedInstance] allItemsOfType:NSStringFromClass([ImageDataInfo class])];
+        if (images.count > 0) {
+            NSMutableArray *sink = [NSMutableArray arrayWithCapacity:images.count];
+            
+            for(ImageDataInfo *iiData in images) {
+                
+                @autoreleasepool {
+                    FlickrImage *image = [FlickrImage imageWithPID:iiData.pid url:iiData.url previewURL:iiData.previewURL];
+                    image.username = iiData.username;
+                    image.realname = iiData.realname;
+                    image.location = iiData.location;
+                    image.description = iiData.descr;
+                    image.posted = iiData.posted;
+                    image.taken = iiData.taken;
+                    
+                    [sink addObject:image];
+                }
+            }
+            
+            myclass->_images = [sink copy];
+        } else {
+            myclass->_images = nil;
         }
         
-        _images = images;
-        
-        dispatch_sync(dispatch_get_main_queue(), completion);
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            if([myclass->_delegate respondsToSelector:@selector(didCompleteDownloadingImages)]){
+                [myclass->_delegate didCompleteDownloadingImages];
+            }
+        });
     });
 }
 
@@ -175,7 +176,7 @@ static NSString *FLICKR_URL_REQUEST_RECENT = @"http://api.flickr.com/services/re
 // |+|                                                                       |+|
 // |+|                                                                       |+|
 // |+|=======================================================================|+|
-- (FlickrImage *)imageAtIndex:(NSUInteger)index
+- (id)imageAtIndex:(NSUInteger)index
 {
     if(index < _images.count)
     {

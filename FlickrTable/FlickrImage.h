@@ -11,7 +11,7 @@
 @interface FlickrImage : NSObject
 
 @property (nonatomic, copy, readonly) NSString *pid;
-@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy, readonly) NSString *title;
 @property (nonatomic, copy, readonly) NSString *url;
 @property (nonatomic, copy, readonly) NSString *previewURL;
 @property (nonatomic, copy) NSString *username;
@@ -21,8 +21,8 @@
 @property (nonatomic, copy) NSString *posted;
 @property (nonatomic, copy) NSString *taken;
 
-- (id)init;
-- (id)initWithPID:(NSString *)pid url:(NSString *)url previewURL:(NSString *)previewURL;
++ (instancetype)image;
++ (instancetype)imageWithPID:(NSString *)pid url:(NSString *)url previewURL:(NSString *)previewURL;
++ (instancetype) imageWithImage:(FlickrImage *)source;
 
-+ (FlickrImage *) imageWithImage:(FlickrImage *)source;
 @end

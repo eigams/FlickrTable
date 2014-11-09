@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @protocol HorizontalScrollerDelegate;
+@protocol FlickerImageSourceDelegate;
+@protocol ImageInfoHTTPClientDelegate;
 
-@interface FlickrImageListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, HorizontalScrollerDelegate>
+
+@interface FlickrImageListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, HorizontalScrollerDelegate, FlickerImageSourceDelegate>
 
 @end

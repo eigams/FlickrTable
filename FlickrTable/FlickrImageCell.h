@@ -17,4 +17,6 @@
 - (void) startAnimation;
 - (void) stopAnimation;
 
+- (void) setTextColor:(UIColor *)textColor;
+
 @end

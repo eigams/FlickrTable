@@ -16,11 +16,24 @@
 
 @end
 
+@class FlickerImageSource;
+
+@protocol FlickerImageSourceDelegate <NSObject>
+
+@optional
+
+- (void) didCompleteDownloadingImages;
+
+@end
+
 @interface FlickerImageSource : NSObject
 
 @property (nonatomic, assign, readonly) NSUInteger count;
+@property (nonatomic, weak) id<FlickerImageSourceDelegate> delegate;
 
-- (void)fetchRecentImagesWithCompletion:(void (^)(void))completion;
-- (FlickrImage *)imageAtIndex:(NSUInteger)index;
+- (void)fetchRecentImages;
+- (void)fetchArchivedImages;
+
+- (id)imageAtIndex:(NSUInteger)index;
 
 @end

@@ -7,11 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C1AA31618EAE94C009C2D5A /* ImageInfoHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1AA31518EAE94C009C2D5A /* ImageInfoHTTPClient.m */; };
+		0C1AA31918EAFA8B009C2D5A /* ImageHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1AA31818EAFA8B009C2D5A /* ImageHTTPClient.m */; };
+		0C22957C18ABF5940049D875 /* ManagedObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C22957B18ABF5940049D875 /* ManagedObjectStore.m */; };
 		0C90EF1917F5A4F6009DA334 /* FlickrImage+TableRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C90EF1817F5A4F6009DA334 /* FlickrImage+TableRepresentation.m */; };
 		0CA10F8917F887AB002DE74F /* HorizontalScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CA10F8817F887AB002DE74F /* HorizontalScroller.m */; };
 		0CA10F8C17F8A2EF002DE74F /* PictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CA10F8B17F8A2EF002DE74F /* PictureView.m */; };
-		0CD4868F1815E287002A6A62 /* ImageInfoDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4868E1815E287002A6A62 /* ImageInfoDelegate.m */; };
-		0CE458BA1810877600A03490 /* LibraryAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE458B91810877600A03490 /* LibraryAPI.m */; };
+		0CC75489184AE8BF00755812 /* FlickerTable.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CC75487184AE8BF00755812 /* FlickerTable.xcdatamodeld */; };
+		0CC7548B184AEB9000755812 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CC7548A184AEB9000755812 /* CoreData.framework */; };
+		0CC7548E184AEE0500755812 /* ImageDataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC7548D184AEE0500755812 /* ImageDataInfo.m */; };
+		0CEC45A018EB089700D698E2 /* LibraryAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC459F18EB089700D698E2 /* LibraryAPI.m */; };
+		81F2793BC9CA4B479498D9EF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE66061CDBAE490495460D62 /* libPods.a */; };
 		AA1058A217A69CBC00234097 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA10589717A69CBC00234097 /* AppDelegate.m */; };
 		AA1058A417A69CBC00234097 /* FlickrImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA10589C17A69CBC00234097 /* FlickrImageCell.m */; };
 		AA1058A517A69CBC00234097 /* FlickrImageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA10589E17A69CBC00234097 /* FlickrImageListViewController.m */; };
@@ -33,16 +39,26 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C1AA31418EAE94C009C2D5A /* ImageInfoHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageInfoHTTPClient.h; sourceTree = "<group>"; };
+		0C1AA31518EAE94C009C2D5A /* ImageInfoHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageInfoHTTPClient.m; sourceTree = "<group>"; };
+		0C1AA31718EAFA8B009C2D5A /* ImageHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageHTTPClient.h; sourceTree = "<group>"; };
+		0C1AA31818EAFA8B009C2D5A /* ImageHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageHTTPClient.m; sourceTree = "<group>"; };
+		0C22957A18ABF5940049D875 /* ManagedObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagedObjectStore.h; sourceTree = "<group>"; };
+		0C22957B18ABF5940049D875 /* ManagedObjectStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagedObjectStore.m; sourceTree = "<group>"; };
+		0C22957D18ABF6D50049D875 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
 		0C90EF1717F5A4F6009DA334 /* FlickrImage+TableRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FlickrImage+TableRepresentation.h"; sourceTree = "<group>"; };
 		0C90EF1817F5A4F6009DA334 /* FlickrImage+TableRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FlickrImage+TableRepresentation.m"; sourceTree = "<group>"; };
 		0CA10F8717F887AB002DE74F /* HorizontalScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HorizontalScroller.h; sourceTree = "<group>"; };
 		0CA10F8817F887AB002DE74F /* HorizontalScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizontalScroller.m; sourceTree = "<group>"; };
 		0CA10F8A17F8A2EF002DE74F /* PictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureView.h; sourceTree = "<group>"; };
 		0CA10F8B17F8A2EF002DE74F /* PictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureView.m; sourceTree = "<group>"; };
-		0CD4868D1815E287002A6A62 /* ImageInfoDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageInfoDelegate.h; sourceTree = "<group>"; };
-		0CD4868E1815E287002A6A62 /* ImageInfoDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageInfoDelegate.m; sourceTree = "<group>"; };
-		0CE458B81810877600A03490 /* LibraryAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryAPI.h; sourceTree = "<group>"; };
-		0CE458B91810877600A03490 /* LibraryAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryAPI.m; sourceTree = "<group>"; };
+		0CC75488184AE8BF00755812 /* FlickerTable.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FlickerTable.xcdatamodel; sourceTree = "<group>"; };
+		0CC7548A184AEB9000755812 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		0CC7548C184AEE0500755812 /* ImageDataInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDataInfo.h; sourceTree = "<group>"; };
+		0CC7548D184AEE0500755812 /* ImageDataInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDataInfo.m; sourceTree = "<group>"; };
+		0CEC459E18EB089700D698E2 /* LibraryAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryAPI.h; sourceTree = "<group>"; };
+		0CEC459F18EB089700D698E2 /* LibraryAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryAPI.m; sourceTree = "<group>"; };
+		34CE80F2FE7547BBB6CEA05C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		AA10589617A69CBC00234097 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AA10589717A69CBC00234097 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		AA10589A17A69CBC00234097 /* FlickrConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrConstants.h; sourceTree = "<group>"; };
@@ -71,6 +87,7 @@
 		AAEEEEEC17A69A4200584145 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		AAEEEEEE17A69A5900584145 /* apple-touch-icon-72x72-precomposed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon-72x72-precomposed.png"; sourceTree = "<group>"; };
 		AAEEEEF017A69A6C00584145 /* apple-touch-icon-144x144-precomposed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon-144x144-precomposed.png"; sourceTree = "<group>"; };
+		EE66061CDBAE490495460D62 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,9 +95,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CC7548B184AEB9000755812 /* CoreData.framework in Frameworks */,
 				AAEEEEC517A697D200584145 /* UIKit.framework in Frameworks */,
 				AAEEEEC717A697D200584145 /* Foundation.framework in Frameworks */,
 				AAEEEEC917A697D200584145 /* CoreGraphics.framework in Frameworks */,
+				81F2793BC9CA4B479498D9EF /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,10 +109,14 @@
 		0C2D795217F42AF50024DA24 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0CD4868D1815E287002A6A62 /* ImageInfoDelegate.h */,
-				0CD4868E1815E287002A6A62 /* ImageInfoDelegate.m */,
-				0CE458B81810877600A03490 /* LibraryAPI.h */,
-				0CE458B91810877600A03490 /* LibraryAPI.m */,
+				0CEC459E18EB089700D698E2 /* LibraryAPI.h */,
+				0CEC459F18EB089700D698E2 /* LibraryAPI.m */,
+				0C1AA31718EAFA8B009C2D5A /* ImageHTTPClient.h */,
+				0C1AA31818EAFA8B009C2D5A /* ImageHTTPClient.m */,
+				0C1AA31418EAE94C009C2D5A /* ImageInfoHTTPClient.h */,
+				0C1AA31518EAE94C009C2D5A /* ImageInfoHTTPClient.m */,
+				0CC7548C184AEE0500755812 /* ImageDataInfo.h */,
+				0CC7548D184AEE0500755812 /* ImageDataInfo.m */,
 				AA1058C917A6B24A00234097 /* FlickerImageSource.h */,
 				AA1058CA17A6B24A00234097 /* FlickerImageSource.m */,
 				AA1058C617A6B02300234097 /* FlickrImage.h */,
@@ -120,6 +143,8 @@
 		0C2D795517F42C340024DA24 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0C22957A18ABF5940049D875 /* ManagedObjectStore.h */,
+				0C22957B18ABF5940049D875 /* ManagedObjectStore.m */,
 				AA10589D17A69CBC00234097 /* FlickrImageListViewController.h */,
 				AA10589E17A69CBC00234097 /* FlickrImageListViewController.m */,
 				AA10589F17A69CBC00234097 /* FlickrImageViewController.h */,
@@ -138,6 +163,7 @@
 				AAEEEECA17A697D200584145 /* FlickrTable */,
 				AAEEEEC317A697D200584145 /* Frameworks */,
 				AAEEEEC217A697D200584145 /* Products */,
+				34CE80F2FE7547BBB6CEA05C /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -152,9 +178,11 @@
 		AAEEEEC317A697D200584145 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0CC7548A184AEB9000755812 /* CoreData.framework */,
 				AAEEEEC417A697D200584145 /* UIKit.framework */,
 				AAEEEEC617A697D200584145 /* Foundation.framework */,
 				AAEEEEC817A697D200584145 /* CoreGraphics.framework */,
+				EE66061CDBAE490495460D62 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -167,7 +195,6 @@
 				0C2D795217F42AF50024DA24 /* Models */,
 				AA10589617A69CBC00234097 /* AppDelegate.h */,
 				AA10589717A69CBC00234097 /* AppDelegate.m */,
-				AA10589A17A69CBC00234097 /* FlickrConstants.h */,
 				AAEEEECB17A697D200584145 /* Supporting Files */,
 			);
 			path = FlickrTable;
@@ -176,6 +203,8 @@
 		AAEEEECB17A697D200584145 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AA10589A17A69CBC00234097 /* FlickrConstants.h */,
+				0C22957D18ABF6D50049D875 /* Singleton.h */,
 				AAEEEECC17A697D200584145 /* FlickrTable-Info.plist */,
 				AAEEEECD17A697D200584145 /* InfoPlist.strings */,
 				AAEEEED017A697D200584145 /* main.m */,
@@ -183,6 +212,7 @@
 				AAEEEED617A697D200584145 /* Default.png */,
 				AAEEEED817A697D200584145 /* Default@2x.png */,
 				AAEEEEDA17A697D200584145 /* Default-568h@2x.png */,
+				0CC75487184AE8BF00755812 /* FlickerTable.xcdatamodeld */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -194,9 +224,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AAEEEEE717A697D200584145 /* Build configuration list for PBXNativeTarget "FlickrTable" */;
 			buildPhases = (
+				2C407A0B1CE2493B95F26277 /* Check Pods Manifest.lock */,
 				AAEEEEBD17A697D200584145 /* Sources */,
 				AAEEEEBE17A697D200584145 /* Frameworks */,
 				AAEEEEBF17A697D200584145 /* Resources */,
+				7A4BE97D6BDD4BEE883F96B7 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -251,23 +283,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2C407A0B1CE2493B95F26277 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7A4BE97D6BDD4BEE883F96B7 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AAEEEEBD17A697D200584145 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0CD4868F1815E287002A6A62 /* ImageInfoDelegate.m in Sources */,
+				0C22957C18ABF5940049D875 /* ManagedObjectStore.m in Sources */,
 				AAEEEED117A697D200584145 /* main.m in Sources */,
-				0CE458BA1810877600A03490 /* LibraryAPI.m in Sources */,
 				AA1058A217A69CBC00234097 /* AppDelegate.m in Sources */,
+				0CEC45A018EB089700D698E2 /* LibraryAPI.m in Sources */,
 				AA1058A417A69CBC00234097 /* FlickrImageCell.m in Sources */,
 				AA1058A517A69CBC00234097 /* FlickrImageListViewController.m in Sources */,
 				AA1058A617A69CBC00234097 /* FlickrImageViewController.m in Sources */,
 				AA1058C817A6B02300234097 /* FlickrImage.m in Sources */,
+				0C1AA31918EAFA8B009C2D5A /* ImageHTTPClient.m in Sources */,
+				0CC75489184AE8BF00755812 /* FlickerTable.xcdatamodeld in Sources */,
+				0C1AA31618EAE94C009C2D5A /* ImageInfoHTTPClient.m in Sources */,
 				AA1058CB17A6B24A00234097 /* FlickerImageSource.m in Sources */,
 				0C90EF1917F5A4F6009DA334 /* FlickrImage+TableRepresentation.m in Sources */,
 				0CA10F8917F887AB002DE74F /* HorizontalScroller.m in Sources */,
 				0CA10F8C17F8A2EF002DE74F /* PictureView.m in Sources */,
+				0CC7548E184AEE0500755812 /* ImageDataInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +414,7 @@
 		};
 		AAEEEEE817A697D200584145 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 34CE80F2FE7547BBB6CEA05C /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlickrTable/FlickrTable-Prefix.pch";
@@ -356,6 +426,7 @@
 		};
 		AAEEEEE917A697D200584145 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 34CE80F2FE7547BBB6CEA05C /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlickrTable/FlickrTable-Prefix.pch";
@@ -387,6 +458,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0CC75487184AE8BF00755812 /* FlickerTable.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0CC75488184AE8BF00755812 /* FlickerTable.xcdatamodel */,
+			);
+			currentVersion = 0CC75488184AE8BF00755812 /* FlickerTable.xcdatamodel */;
+			path = FlickerTable.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = AAEEEEB917A697D200584145 /* Project object */;
 }

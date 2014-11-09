@@ -11,5 +11,9 @@
 @class FlickrImage;
 
 @interface FlickrImageViewController : UIViewController<UIScrollViewDelegate>
+
+@property (nonatomic, strong) UIScrollView *scrollView;
+
 - (id)initWithFlickrImage:(FlickrImage *)image;
+
 @end
